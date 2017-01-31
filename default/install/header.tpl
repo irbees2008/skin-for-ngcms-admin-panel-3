@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 	<link rel="stylesheet" href="{templateURL}/style.css">
 	
-	<script src="skins/default/assets/js/jquery-1.11.3.js"></script>
+	<script src="skins/default/assets/js/jquery-2.1.4.min.js"></script>
 	<script src="skins/default/assets/js/bootstrap.js"></script>
 </head>
 <body>
