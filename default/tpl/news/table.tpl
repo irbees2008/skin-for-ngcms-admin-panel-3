@@ -122,7 +122,7 @@
 						<tr>
 							<td><input name="selected_news[]" value="{{ entry.newsid }}" type="checkbox" /></td>
 							<td class="hidden-xs">{{ entry.newsid }}</td>
-							<td class="hidden-xs">
+							<td class="hidden-xs" nowrap>
 								{% if entry.flags.mainpage %}
 									<i class="fa fa-home"></i>
 								{% endif %}

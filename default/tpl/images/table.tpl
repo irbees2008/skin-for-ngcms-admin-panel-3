@@ -40,12 +40,6 @@
 								{dateslist}
 							</select>
 						</div>
-						<div class="form-group">
-							<label for="">{l_show_preview}</label>
-							<label class="btn btn-default form-control">
-								<input type="checkbox" autocomplete="off" onchange="setCookie('img_preview',this.checked?1:0); document.location=document.location;" {box_preview}> 
-							</label>
-						</div>
 					</div>
 					<!--/Block 2-->
 					<!--Block 3-->
@@ -74,6 +68,11 @@
 	<div class="panel panel-default panel-table">
 		<div class="panel-heading text-right">
 			<a href="#" data-toggle="modal" data-target="#categories" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary" title="{l_show_preview}">
+				<input type="checkbox" id="show_preview" autocomplete="off" onchange="setCookie('img_preview',this.checked?1:0); document.location=document.location;" {box_preview}> <i class="fa fa-eye"></i>
+				</label>
+			</div>
 			<button type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter" class="btn btn-primary"><i class="fa fa-cog"></i></button>
 			<a href="#" title="{l_uploadnew}" class="btn btn-success" data-toggle="modal" data-target="#upload_form"><i class="fa fa-plus"></i></a>
 		</div>
@@ -337,8 +336,14 @@
 <!-- Main scripts -->
 <script>
 
-$('#mfs').html('Максимальный размер изображения: ' + formatSize({maxSize})+'<br>Допустимые расширения изображений: {listExt}');
-
+$(document).ready(function(){
+	$('#mfs').html('Максимальный размер изображения: ' + formatSize({maxSize})+'<br>Допустимые расширения изображений: {listExt}');
+	
+	if ($('#show_preview').prop("checked")){
+		$('#show_preview').parent().addClass('active');
+	}
+	
+});
 function updateAction() {
 	mode = document.forms['delform'].subaction.value;
 	if (mode == 'move')
@@ -360,12 +365,23 @@ function attachAddRow(id) {
 	// Add cells, Add file input
 	if ( id == 'imageup2' || id == 'fileup2' ) {
 		row.insertCell(0).innerHTML = '<input type="text" name="userurl[' + attachAbsoluteRowID + ']" class="form-control">'
+	
+	} else if ( id == 'imageup' || id == 'fileup' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple,{maxSize});" multiple>\
+										</div>';
+	} else if ( id == 'attachFilelist' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
+										</div>';
 	} else if ( id == 'attachFilelist_edit' ) {
 		var xCell = row.insertCell(0);
-		xCell.setAttribute('colspan', '4');
+		xCell.setAttribute('colspan', '5');
 		xCell.innerHTML = '<div class="btn btn-default btn-fileinput">\
 										<span>{l_attach.new}</span>\
-										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
+										<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
 									</div>';
 	} else {
 		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
@@ -373,6 +389,7 @@ function attachAddRow(id) {
 										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
 									</div>';
 	}
+	
 	var xCell = row.insertCell(1);
 	xCell.setAttribute('class', 'text-center');
 	

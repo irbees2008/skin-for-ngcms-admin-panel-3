@@ -314,12 +314,23 @@ function attachAddRow(id) {
 	// Add cells, Add file input
 	if ( id == 'imageup2' || id == 'fileup2' ) {
 		row.insertCell(0).innerHTML = '<input type="text" name="userurl[' + attachAbsoluteRowID + ']" class="form-control">'
+	
+	} else if ( id == 'imageup' || id == 'fileup' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple,{maxSize});" multiple>\
+										</div>';
+	} else if ( id == 'attachFilelist' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
+										</div>';
 	} else if ( id == 'attachFilelist_edit' ) {
 		var xCell = row.insertCell(0);
-		xCell.setAttribute('colspan', '4');
+		xCell.setAttribute('colspan', '5');
 		xCell.innerHTML = '<div class="btn btn-default btn-fileinput">\
 										<span>{l_attach.new}</span>\
-										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
+										<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
 									</div>';
 	} else {
 		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
@@ -327,6 +338,7 @@ function attachAddRow(id) {
 										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
 									</div>';
 	}
+	
 	var xCell = row.insertCell(1);
 	xCell.setAttribute('class', 'text-center');
 	

@@ -24,16 +24,20 @@
 					<div class="panel-heading"><h4 class="panel-title">{{ lang['maincontent'] }}</h4></div>
 					<div id="maincontent" class="panel-body">
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{ lang.addnews['title'] }}</label>
-							<div class="col-sm-9">
-								<input type="text" name="title" id="newsTitle" value="" tabindex="1" class="form-control"/>
+							<label class="col-sm-3 control-label">
+								{{ lang.addnews['title'] }}
+								<!--span class="label label-info pull-right" title="Заголовок новости">?</span-->
+								</label>
+							<div class="col-sm-9 has-feedback">
+								<input type="text" name="title" id="newsTitle" value="" tabindex="1" placeholder="{{ lang.addnews['title'] }}" class="form-control"/>
+								<!--i class="fa fa-user form-control-feedback"  title="Заголовок новости:"></i-->
 							</div>
 						</div>
 						{% if not flags['altname.disabled'] %}
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{ lang.addnews['alt_name'] }}</label>
 							<div class="col-sm-9">
-								<input type="text" name="alt_name" value="" tabindex="2" class="form-control"/>
+								<input type="text" name="alt_name" value="" tabindex="2" placeholder="{{ lang.addnews['alt_name'] }}" class="form-control"/>
 							</div>
 						</div>
 						{% endif %}
@@ -86,7 +90,7 @@
 									</div>
 								{% else %}
 									<div id="container.content" class="contentActive">
-										<textarea name="ng_news_content" {% if (isBBCode) %}class="{{ attributBB }} form-control"{% else %}id="ng_news_content" class="form-control ng_news_content"{% endif %} rows="10" tabindex="5"></textarea>
+										<textarea name="ng_news_content" {% if (isBBCode) %}class="{{ attributBB }} form-control"{% else %}id="ng_news_content" class="form-control ng_news_content"{% endif %} placeholder="Lorem ipsum dolor sit amet . . ." rows="10" tabindex="5"></textarea>
 									</div>
 								{% endif %}
 							</div>
@@ -161,7 +165,7 @@
 						</div>
 						<div id="attaches" class="panel-collapse collapse" aria-expanded="false">
 							<div class="panel-body">
-								<table id="attachFilelist" class="table table-condensed">
+								<table id="attachFilelist" class="table table-condensed table-bordered">
 									<thead>
 										<tr>
 											<th>{{ lang['attach.filename'] }} - {{ lang['attach.size'] }}</th>
@@ -352,19 +356,31 @@ function attachAddRow(id) {
 	// Add cells, Add file input
 	if ( id == 'imageup2' || id == 'fileup2' ) {
 		row.insertCell(0).innerHTML = '<input type="text" name="userurl[' + attachAbsoluteRowID + ']" class="form-control">'
+	
+	} else if ( id == 'imageup' || id == 'fileup' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple,{maxSize});" multiple>\
+										</div>';
+	} else if ( id == 'attachFilelist' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
+										</div>';
 	} else if ( id == 'attachFilelist_edit' ) {
 		var xCell = row.insertCell(0);
-		xCell.setAttribute('colspan', '4');
+		xCell.setAttribute('colspan', '5');
 		xCell.innerHTML = '<div class="btn btn-default btn-fileinput">\
-										<span>{{ lang['attach.new'] }}</span>\
-										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
+										<span>{l_attach.new}</span>\
+										<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
 									</div>';
 	} else {
 		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
-										<span>{{ lang['attach.new'] }}</span>\
+										<span>{l_attach.new}</span>\
 										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
 									</div>';
 	}
+	
 	var xCell = row.insertCell(1);
 	xCell.setAttribute('class', 'text-center');
 	

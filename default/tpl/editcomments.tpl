@@ -56,7 +56,7 @@
 							</div>
 							<div class="col-sm-9">
 								<button type="button" title="{l_delete}" onClick="confirmit('admin.php?mod=editcomments&subaction=deletecomment&newsid={newsid}&comid={comid}&poster={author}', '{l_sure_del}')" class="btn btn-danger pull-right"><i class="fa fa-trash-o"></i></button>
-								<button type="submit" class="btn btn-success" tabindex="5" class="form-control">{l_save}</button>
+								<button type="submit" title="{l_save} (Ctrl+S)" tabindex="5" class="btn btn-success">{l_save}</button>
 							</div>
 						</div>
 						
@@ -101,3 +101,14 @@
 		</div>
 	</form>
 </div>
+
+<script>
+document.onkeydown = function(e) {
+  e = e || event;
+
+  if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
+    form.submit();
+    return false;
+  }
+}
+</script>

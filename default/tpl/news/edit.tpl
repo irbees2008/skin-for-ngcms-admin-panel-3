@@ -184,12 +184,13 @@
 						</div>
 						<div id="attaches" class="panel-collapse collapse" aria-expanded="false">
 							<div class="panel-body">
-								<table id="attachFilelist_edit" class="table table-condensed">
+								<table id="attachFilelist_edit" class="table table-condensed table-bordered">
 									<thead>
 										<tr>
 											<th>ID</th>
 											<th>&nbsp;</th>
-											<th>{{ lang.editnews['attach.filename'] }} - {{ lang.editnews['attach.size'] }}</th>
+											<th>{{ lang.editnews['attach.filename'] }}</th>
+											<th>{{ lang.editnews['attach.size'] }}</th>
 											<th>{{ lang.editnews['attach.date'] }}</th>
 											<th class="text-center">{{ lang['do_delete'] }}</th>
 										</tr>
@@ -202,7 +203,8 @@
 												<a href="#" onclick="insertext('[attach#{{ entry.id }}]{{ entry.orig_name }}[/attach]','', currentInputAreaID)" title="{{ lang['tags.file'] }}">
 												<i class="fa fa-paperclip fa-2x"></i></a>
 											</td>
-											<td><a href="{{ entry.url }}">{{ entry.orig_name }}</a> - {{ entry.filesize }}</td>
+											<td><a href="{{ entry.url }}">{{ entry.orig_name }}</a></td>
+											<td>{{ entry.filesize }}</td>
 											<td>{{ entry.date }}</td>
 											<td class="text-center"><input type="checkbox" name="delfile_{{ entry.id }}" value="1" /></td>
 										</tr>
@@ -210,7 +212,7 @@
 										<tr><td colspan="5">{{ lang.editnews['attach.no_files_attached'] }}</td></tr>
 									{% endfor %}
 										<tr>
-											<td colspan="4"></td>
+											<td colspan="5"></td>
 											<td class="text-center" width="10">
 												<button type="button" title="{l_attach.more_rows}" onclick="attachAddRow('attachFilelist_edit');" class="btn btn-primary" title="{l_attach.more_rows}"><i class="fa fa-plus"></i></button>
 											</td>
@@ -458,19 +460,31 @@ function attachAddRow(id) {
 	// Add cells, Add file input
 	if ( id == 'imageup2' || id == 'fileup2' ) {
 		row.insertCell(0).innerHTML = '<input type="text" name="userurl[' + attachAbsoluteRowID + ']" class="form-control">'
+	
+	} else if ( id == 'imageup' || id == 'fileup' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple,{maxSize});" multiple>\
+										</div>';
+	} else if ( id == 'attachFilelist' ) {
+		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
+											<span>{l_attach.new}</span>\
+											<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
+										</div>';
 	} else if ( id == 'attachFilelist_edit' ) {
 		var xCell = row.insertCell(0);
-		xCell.setAttribute('colspan', '4');
+		xCell.setAttribute('colspan', '5');
 		xCell.innerHTML = '<div class="btn btn-default btn-fileinput">\
-										<span>{{ lang['attach.new'] }}</span>\
-										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
+										<span>{l_attach.new}</span>\
+										<input type="file" name="userfile[]" onchange="validateFile(this, multiple);" multiple>\
 									</div>';
 	} else {
 		row.insertCell(0).innerHTML = '<div class="btn btn-default btn-fileinput">\
-										<span>{{ lang['attach.new'] }}</span>\
+										<span>{l_attach.new}</span>\
 										<input type="file" name="userfile[' + attachAbsoluteRowID + ']" onchange="validateFile(this);">\
 									</div>';
 	}
+	
 	var xCell = row.insertCell(1);
 	xCell.setAttribute('class', 'text-center');
 	
