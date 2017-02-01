@@ -79,12 +79,12 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" class="select-all"></th>
-							<th>#</td>
-							<td>{l_name}</td>
-							<td>{l_size}</td>
-							<td>{l_category}</td>
-							<td>{l_author}</td>
-							<td>{l_action}</td>
+							<th>#</th>
+							<th>{l_name}</th>
+							<th>{l_size}</th>
+							<th>{l_category}</th>
+							<th>{l_author}</th>
+							<th>{l_action}</th>
 						</tr>
 					</thead>
 					
