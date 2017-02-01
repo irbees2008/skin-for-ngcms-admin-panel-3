@@ -117,18 +117,18 @@ $skin_header = <<<HTML
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle">
+				<button type="button" class="navbar-toggle sidebar-toggle">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand hidden-xs" href="admin.php" title="$lang[mainpage_t]">$config[home_title]</a>
+				<a class="navbar-brand hidden-xs" href="admin.php" title="$lang[mainpage_t]">Next Generation CMS</a>
 			</div>
 			
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
-					<li class="dropdown  hidden-xs">
+					<li class="dropdown hidden-xs">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">Themes <span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
 							<li><a href="#" onclick="switchtheme('default');return false;">Default</a></li>
@@ -196,7 +196,7 @@ $skin_header = <<<HTML
 	</nav>
 	
 	<div class="side-menu-container navbar navbar-inverse">
-		<ul class="navbar-nav" id="navmenu-v">
+		<ul class="navbar-nav">
 			<li class="bg-default"><a href="$config[home_url]" target="_blank"><i class="fa fa-external-link"></i> $lang[mainpage]</a></li>
 			
 			<li class="panel panel-default">
@@ -272,10 +272,12 @@ $skin_header = <<<HTML
 			<div class="alert alert-danger" role="alert">Внимание! В вашем браузере отключен <b>JavaScript</b></div>
 			<div class="alert alert-info" role="alert">Для полноценной работы с админ. панелью <b>включите его</b></div>
 		</noscript>
+		<div class="container-fluid">
 HTML;
 
 
 $skin_footer = <<<HTML
+		</div>
 	</main>
 	
 	<footer class="footer">

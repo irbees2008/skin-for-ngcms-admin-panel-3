@@ -30,10 +30,10 @@ $(document).ready(function(){
 		});
 	});
 	
-	// Добавляем стилизацию в соотвестствии 
+	// Добавляем стилизацию в соотвестствии
 	// с bootstrap для недоступных элементов
 	$('[type=submit]:not(.btn)').addClass('btn btn-success');
-	$('input:not([type=submit]):not([type=button]):not([type=reset]):not([type=file]):not([type=checkbox]):not([type=radio]):not(.form-control):not(.button), select:not(.form-control), textarea:not(.form-control)').addClass('form-control').removeAttr('style');
+	$('input:not([type=hidden]):not([type=submit]):not([type=button]):not([type=reset]):not([type=file]):not([type=checkbox]):not([type=radio]):not(.form-control):not(.button), select:not(.form-control), textarea:not(.form-control)').addClass('form-control').removeAttr('style');
 	$('.button:not([type=submit])').addClass('btn btn-default').removeClass('button');
 	$('.btnActive').addClass('btn btn-sm btn-primary').removeClass('btnActive');
 	$('.btnInactive').addClass('btn btn-sm btn-default').removeClass('btnInactive');
@@ -69,7 +69,7 @@ $(document).ready(function(){
 	});
 	
 	// Боковое меню
-	$('.navbar-toggle, #sidenav-overlay').click(function () {
+	$('.sidebar-toggle, #sidenav-overlay').click(function () {
 		$("html, body").animate({ scrollTop: 0 }, 0);
 		$('.side-menu-container ').toggleClass('slide-in');
 		$('.side-body').toggleClass('body-slide-in');
@@ -416,22 +416,61 @@ HTML
 	<input type="file" name="image" id="image-con" onchange="validateFile(this);">
 </div>
 */
+function checkImage(where, idnumber) {
+	var preview = document.getElementById('preview' + idnumber);
+	preview.innerHTML = '';
+	[].forEach.call(where.files, function(file) {
+		if (file.type.match(/image.*/)) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var img = document.createElement('img');
+				img.src = event.target.result;
+				img.style.cssText = 'vertical-align: top; width: 88px;';
+				preview.appendChild(img);
+			};
+			reader.readAsDataURL(file);
+		}
+	});
+}
 
-function validateFile(fileInput) {
+function validateFile(fileInput,multiple,fileMaxSize) {
 	var htext = '';
 	var hsize = '';
 	
 	if (!fileInput.value) {
+		$(fileInput).closest('.btn-fileinput').attr('style', '');
+		$(fileInput).closest('.btn-fileinput').addClass('btn');
 		$(fileInput).closest('.btn-fileinput').children('span').eq(0).html('<i class="fa fa-plus"></i> Add files ...');
+		$(fileInput).closest('.btn-fileinput').children('span').attr('style', '');
 		return false;
 	}
 	
-	for (var i = 0; i < fileInput.files.length; i++) {
-		htext += fileInput.files[i].name+' ('+formatSize(fileInput.files[i].size)+')<br />';
-		hsize = Number(fileInput.files[i].size) + Number(hsize);
+	if (multiple) {
+		for (var i = 0; i < fileInput.files.length; i++) {
+			if (fileMaxSize) {
+				htext += '<tr><td style="overflow:hidden;text-overflow:ellipsis;max-width: 400px;">' + fileInput.files[i].name+'</td><td nowrap><b class="pull-right' + (fileInput.files[i].size>fileMaxSize?' text-danger':'') + '">'+formatSize(fileInput.files[i].size)+'</td></tr>';
+			} else {
+				htext += '<tr><td style="overflow:hidden;text-overflow:ellipsis;max-width: 400px;">' + fileInput.files[i].name+'</td><td nowrap><b class="pull-right">'+formatSize(fileInput.files[i].size)+'</td></tr>';
+			}
+			hsize = Number(fileInput.files[i].size) + Number(hsize);
+		}
+		
+		$(fileInput).closest('.btn-fileinput').removeClass('btn');
+		
+		$(fileInput).closest('.btn-fileinput').children('span').eq(0).html('<table\
+			class="table-condensed table-bordered" style="width: 100%;">\
+			' + htext + '<tr><td colspan="2" class="text-right">' + formatSize(hsize) + '</td></tr></table>');
+		$(fileInput).closest('.btn-fileinput').children('span').eq(0).css({'width': '100%', 'display': 'block', 'white-space': 'nowrap'});
+		$(fileInput).closest('.btn-fileinput').css({'width': '100%', 'display': 'block'});
+	} else {
+		for (var i = 0; i < fileInput.files.length; i++) {
+			htext += fileInput.files[i].name+' ('+formatSize(fileInput.files[i].size)+')<br />';
+			hsize = Number(fileInput.files[i].size) + Number(hsize);
+		}
+		
+		$(fileInput).closest('.btn-fileinput').children('span').eq(0).html(htext);
+
 	}
-	
-	$(fileInput).closest('.btn-fileinput').children('span').eq(0).html(htext);
 	
 	return true;
 }
