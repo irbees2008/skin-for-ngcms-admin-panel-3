@@ -32,7 +32,6 @@
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="http://docs.emmet.io/cheat-sheet/" target="_blank" title="Emmet cheat sheet" class="">emmet</a></li>
 					<li><a href="#" title="Fullscreen (F11)" onclick="$('#templates').toggleClass('content-full');return false;" class=""><i class="fa fa-arrows-alt"></i></a></li>
 				</ul>
 			</nav>
@@ -71,13 +70,6 @@
 		
 		
 	
-	<!--div class="alert alert-info">
-		<h4>Twig &#123;&#123; variables &#125;&#125; for this template, if it is standard</h4>
-		<div class="row">
-			<div class="col col-xs-6"><code>&#123;&#123; lang['langcode'] &#125;&#125;</code> - language code</div>
-			<div class="col col-xs-6"><code>&#123;&#123; lang['langcode'] &#125;&#125;</code> - language code</div>
-		</div>
-	</div-->
 	
 	</div>
 </div>
@@ -88,12 +80,14 @@
 				
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4>Hotkeys for codemirror</h4>
+				<h4>Help</h4>
 			</div>
 			<div class="modal-body">
+				<h4>Hotkeys for codemirror</h4>
 				<div class="row">
 					<div class="col col-xs-6">
-						<table class="table">
+						
+						<table class="table table-condensed">
 							<tr>
 								<td><kbd>Ctrl + S</kbd></td><td>save template</td>
 							</tr>
@@ -101,13 +95,13 @@
 								<td><kbd>F11</kbd></td><td>view fullscreen</td>
 							</tr>
 							<tr>
-								<td><kbd>Ctrl + E</kbd></td><td>expand abbreviation</td>
+								<td><kbd>Ctrl + E</kbd></td><td>expand abbreviation (<a href="http://docs.emmet.io/cheat-sheet/" target="_blank" title="Emmet cheat sheet" class="">emmet</a>)</td>
 							</tr>
 						</table>
 					</div>
 				
 					<div class="col col-xs-6">
-						<table class="table">
+						<table class="table table-condensed">
 							<tr>
 								<td><kbd>Ctrl + F</kbd></td><td>start searching</td>
 							</tr>
@@ -126,6 +120,13 @@
 						</table>
 					</div>
 				</div>
+				<!--div class="well">
+					<h4>Twig &#123;&#123; variables &#125;&#125; for this template, if it is standard</h4>
+					<div class="row">
+						<div class="col col-xs-12"><code>&#123;&#123; lang['langcode'] &#125;&#125;</code> - language code</div>
+						<div class="col col-xs-12"><code>&#123;&#123; lang['langcode'] &#125;&#125;</code> - language code</div>
+					</div>
+				</div-->
 			</div>
 			<div class="modal-footer">
 				<button type="cancel" class="btn btn-default" data-dismiss="modal">{{ lang['close'] }}</button>
@@ -155,8 +156,11 @@ textarea.style.height = cmHeight+'px';
 
 //$('#fileEditorSelector').outerHeight(cmHeight);
 var ngFileTreeFunc = function(file) {
-        ngFileName = file;
-        ngShowLoading();
+		
+		//(file == 'main.tpl'?' Страницы сайта':'');
+		
+		ngFileName = file;
+		ngShowLoading();
 		$.post('../engine/rpc.php', { json : 1, methodName : 'admin.templates.getFile', rndval: new Date().getTime(), params : json_encode({ template : ngTemplateName, 'file' : file, token : '{{ token }}' }) }, function(data) {
 			ngHideLoading();
 			// Try to decode incoming data
