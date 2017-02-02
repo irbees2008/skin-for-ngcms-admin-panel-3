@@ -185,7 +185,7 @@ var ngFileTreeFunc = function(file) {
 			$.notify({message: 'HTTP error during request'},{type: 'danger'});
 		});
 		
-		$('html, body').animate({scrollTop: $('.fileEditorInfo').offset().top - 50}, '888');
+		$('html, body').animate({scrollTop: $('#templates').offset().top}, '888');
 		
 		
 }
@@ -236,6 +236,8 @@ function submitTemplateEdit() {
 }
 
 $(document).ready( function() {
+	
+	$('#templates').toggleClass('content-full');
 	
 	$('#fileTreeSelector').ngFileTree(ngFileTreeParams, ngFileTreeFunc);
 
