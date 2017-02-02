@@ -14,7 +14,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a href="#" class="navbar-brand">Чё-то</a>
+				<a href="#" title="{{ lang['adduser'] }}" class="navbar-brand" data-toggle="modal" data-target="#hotkeys"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
 			</div>
 			<nav class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
 				<ul class="nav navbar-nav">
@@ -69,21 +69,7 @@
 			</div>
 		</div>
 		
-		<div class="alert alert-info">
-			<h4>Hotkeys for codemirror</h4>
-			<div class="row">
-				<div class="col col-xs-3"><kbd>Ctrl + S</kbd> - save template</div>
-				<div class="col col-xs-3"><kbd>F11</kbd> - view fullscreen</div>
-				<div class="col col-xs-3"><kbd>Ctrl + E</kbd> - expand abbreviation</div>
-				<div class="col col-xs-3"><kbd>Ctrl + F</kbd> - start searching</div>
-			</div>
-			<div class="row">
-				<div class="col col-xs-3"><kbd>Ctrl + G</kbd> - find next</div>
-				<div class="col col-xs-3"><kbd>Shift + Ctrl + F</kbd> - replace</div>
-				<div class="col col-xs-3"></div>
-				<div class="col col-xs-3"></div>
-			</div>
-		</div>
+		
 	
 	<!--div class="alert alert-info">
 		<h4>Twig &#123;&#123; variables &#125;&#125; for this template, if it is standard</h4>
@@ -93,6 +79,58 @@
 		</div>
 	</div-->
 	
+	</div>
+</div>
+
+<div id="hotkeys" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+				
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4>Hotkeys for codemirror</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col col-xs-6">
+						<table class="table">
+							<tr>
+								<td><kbd>Ctrl + S</kbd></td><td>save template</td>
+							</tr>
+							<tr>
+								<td><kbd>F11</kbd></td><td>view fullscreen</td>
+							</tr>
+							<tr>
+								<td><kbd>Ctrl + E</kbd></td><td>expand abbreviation</td>
+							</tr>
+						</table>
+					</div>
+				
+					<div class="col col-xs-6">
+						<table class="table">
+							<tr>
+								<td><kbd>Ctrl + F</kbd></td><td>start searching</td>
+							</tr>
+							<tr>
+								<td><kbd>Ctrl + G</kbd></td><td>find next</td>
+							</tr>
+							<tr>
+								<td><kbd>Shift + Ctrl + F</kbd></td><td>replace</td>
+							</tr>
+							<!--tr>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr-->
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="cancel" class="btn btn-default" data-dismiss="modal">{{ lang['close'] }}</button>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -236,9 +274,7 @@ function submitTemplateEdit() {
 }
 
 $(document).ready( function() {
-	
-	$('#templates').toggleClass('content-full');
-	
+
 	$('#fileTreeSelector').ngFileTree(ngFileTreeParams, ngFileTreeFunc);
 
 	$('.tpl-select').click(function(){
